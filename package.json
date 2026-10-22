@@ -1,0 +1,16 @@
+{
+  "name": "soms306-course-mastery-studio",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "A modular static SOMS 306 learning platform for GitHub Pages",
+  "scripts": {
+    "start": "python3 -m http.server 8000",
+    "test": "node --test tests/*.test.js",
+    "test:browser": "node tests/browser.mjs",
+    "test:advanced": "node tests/advanced-browser.mjs"
+  },
+  "devDependencies": {
+    "playwright": "1.62.1"
+  }
+}

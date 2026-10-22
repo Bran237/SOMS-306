@@ -1,0 +1,47 @@
+/* ===================== FORMULA CARD (visual, step-by-step) ===================== */
+.formula-card{background:var(--paper-2);border:1px solid var(--rule);border-radius:10px;padding:16px 18px;margin:14px 0;}
+.formula-card .fc-title{font-family:var(--font-mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-soft);margin-bottom:10px;}
+.formula-card .fc-main{font-family:var(--font-head);font-size:19px;font-weight:700;text-align:center;padding:14px 10px;background:var(--card);border:1px solid var(--rule);border-radius:8px;margin-bottom:12px;color:var(--ink);letter-spacing:.01em;}
+.fc-vars{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;}
+.fc-var-chip{display:flex;align-items:center;gap:6px;background:var(--card);border:1px solid var(--rule);border-radius:999px;padding:5px 11px;font-size:12px;color:var(--ink);}
+.fc-var-chip .sym{font-family:var(--font-head);font-weight:700;color:var(--lo3);}
+.fc-steps{counter-reset:step;margin:0;padding:0;}
+.fc-steps li{list-style:none;counter-increment:step;position:relative;padding:9px 0 9px 36px;border-top:1px dashed var(--rule);font-size:13.5px;line-height:1.5;color:var(--ink);}
+.fc-steps li:first-child{border-top:none;}
+.fc-steps li::before{content:counter(step);position:absolute;left:0;top:9px;width:22px;height:22px;border-radius:50%;background:var(--lo3);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;}
+.fc-answer{margin-top:10px;padding:11px 14px;background:var(--good-bg);color:var(--good);border-radius:8px;font-weight:700;text-align:center;font-size:14px;}
+.section-tag{display:inline-block;font-family:var(--font-mono);font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-soft);background:var(--paper-2);border:1px solid var(--rule);border-radius:6px;padding:2px 8px;margin-left:8px;vertical-align:middle;}
+
+/* ===================== SOURCE BOX (collapsible, named after the textbook figure) ===================== */
+.source-box{margin:8px 0 16px;border:1px solid var(--rule);border-radius:8px;background:var(--paper-2);overflow:hidden;}
+.source-box summary{cursor:pointer;padding:9px 14px;font-size:12.5px;font-weight:700;color:var(--ink-soft);list-style:none;display:flex;align-items:center;gap:7px;user-select:none;}
+.source-box summary::-webkit-details-marker{display:none;}
+.source-box summary::before{content:'\25B8';display:inline-block;transition:transform .18s;font-size:10px;color:var(--lo3);}
+.source-box[open] summary::before{transform:rotate(90deg);}
+.source-box .source-content{padding:2px 14px 13px;font-size:13px;line-height:1.55;color:var(--ink);border-top:1px dashed var(--rule);margin-top:1px;padding-top:10px;}
+.source-box .source-content p{margin:0 0 8px;font-size:13px;}
+.source-box .source-content p:last-child{margin-bottom:0;}
+table.src-table{width:100%;border-collapse:collapse;margin:6px 0 4px;font-size:12.5px;}
+table.src-table th, table.src-table td{border:1px solid var(--rule);padding:5px 9px;text-align:center;}
+table.src-table th{background:var(--card);font-weight:700;color:var(--ink-soft);font-size:11.5px;text-transform:uppercase;letter-spacing:.02em;}
+table.src-table td{background:var(--card);}
+table.src-table td.excluded{opacity:.42;}
+table.src-table td.excluded .src-badge{opacity:.6;}
+table.src-table tr.excluded-row td{opacity:.42;}
+table.src-table td.rowlabel{text-align:left;font-weight:700;background:var(--paper-2);}
+
+/* Source badges: shared visual identifier linking a table cell to its use inside a formula step */
+.src-badge{display:inline-flex;align-items:center;justify-content:center;min-width:17px;height:17px;padding:0 4px;border-radius:5px;font-size:9.5px;font-weight:800;margin-right:3px;border:1.6px solid currentColor;cursor:pointer;vertical-align:middle;line-height:1;background:transparent;}
+.src-badge.b-a{color:#2563eb;} .src-badge.b-b{color:#c2410c;} .src-badge.b-c{color:#15803d;} .src-badge.b-d{color:#a21caf;} .src-badge.b-e{color:#b91c1c;} .src-badge.b-f{color:#0f766e;}
+.src-num{cursor:pointer;border-bottom:1.5px dotted currentColor;}
+.flash{animation:flashglow 1.3s ease;border-radius:4px;}
+@keyframes flashglow{0%{box-shadow:0 0 0 3px rgba(255,196,64,.95);background:rgba(255,196,64,.4);}100%{box-shadow:0 0 0 0 rgba(255,196,64,0);background:transparent;}}
+
+/* Progressive step walkthrough */
+.walk-btn{display:inline-flex;align-items:center;gap:6px;margin:6px 0 10px;padding:7px 14px;border-radius:8px;border:1px solid var(--rule);background:var(--card);font-size:12.5px;font-weight:700;cursor:pointer;color:var(--ink);font-family:inherit;}
+.walk-btn:disabled{opacity:.55;cursor:default;}
+.fc-steps li[hidden]{display:none;}
+.excluded-note{font-size:12px;color:var(--ink-soft);font-style:italic;margin-top:6px;}
+.flow-chain{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:10px 0;font-size:12.5px;}
+.flow-chain .fc-node{background:var(--card);border:1px solid var(--rule);border-radius:7px;padding:5px 10px;font-weight:600;}
+.flow-chain .fc-arrow{color:var(--ink-soft);font-weight:700;}

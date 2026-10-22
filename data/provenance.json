@@ -1,0 +1,16 @@
+{
+  "course": {
+    "repository": "Bran237/SOMS-306",
+    "commit": "f6135253656d2a429693bfb79547f32f8dc1d7dd",
+    "sha256": "27b0a7d2e3a6245dc103c3943f916017b652335f907472825a1ea2837c09b7b7",
+    "chapters": 5,
+    "objectives": 55,
+    "concepts": 155,
+    "questions": 64
+  },
+  "structure": {
+    "repository": "Bran237/FIN-303",
+    "commit": "66fb107af1c85476f8eb803ddaad85fe83269302"
+  },
+  "notebook": "Derived from original operations-management content; no homework, slides, or video sources supplied."
+}
