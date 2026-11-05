@@ -44,6 +44,19 @@ export function installGames(ctx) {
   ctx.gameState = {
     type: null
   };
+  ctx.gameTimeouts = new Set();
+  ctx.cancelGameTimeouts = () => {
+    for (const timer of ctx.gameTimeouts) clearTimeout(timer);
+    ctx.gameTimeouts.clear();
+  };
+  ctx.scheduleGameStep = (callback, delay) => {
+    const session = ctx.gameState;
+    const timer = setTimeout(() => {
+      ctx.gameTimeouts.delete(timer);
+      if (ctx.gameState === session && ctx.MAIN_MODE === 'practice' && ctx.PRACTICE_TAB === 'games') callback();
+    }, delay);
+    ctx.gameTimeouts.add(timer);
+  };
   ctx.viewGames = function viewGames() {
     return `
     <div class="panel-header"><h1>Mini Games</h1></div>
@@ -57,6 +70,7 @@ export function installGames(ctx) {
   `;
   };
   ctx.startGame = function startGame(id) {
+    ctx.cancelGameTimeouts();
     if (ctx.gameState && ctx.gameState.timerId) {
       clearInterval(ctx.gameState.timerId);
     }
@@ -391,7 +405,7 @@ export function installGames(ctx) {
       if (correct) g.score++;
       g.index++;
       g.clueIdx = 0;
-      setTimeout(ctx.render, 900);
+      ctx.scheduleGameStep(ctx.render, 900);
     },
     ftgGuess() {
       const g = ctx.gameState;
@@ -401,7 +415,7 @@ export function installGames(ctx) {
       ctx.dom.getElementById('ftg-feedback').innerHTML = `<p style="color:${correct ? 'var(--good)' : 'var(--bad)'};">${correct ? 'Correct!' : 'Answer: ' + item.answer}</p>`;
       if (correct) g.score++;
       g.index++;
-      setTimeout(ctx.render, 900);
+      ctx.scheduleGameStep(ctx.render, 900);
     },
     oiPick(el) {
       ctx.gameState.built.push(decodeURIComponent(el.dataset.step));
@@ -414,7 +428,7 @@ export function installGames(ctx) {
       ctx.dom.getElementById('oi-feedback').innerHTML = `<p style="color:${correct ? 'var(--good)' : 'var(--bad)'};">${correct ? 'Correct order!' : 'Not quite — correct order: ' + item.steps.join(' → ')}</p>`;
       if (correct) g.score++;
       g.index++;
-      setTimeout(() => {
+      ctx.scheduleGameStep(() => {
         ctx.setupOrderItRound();
         ctx.render();
       }, 1200);
@@ -426,7 +440,7 @@ export function installGames(ctx) {
       ctx.dom.getElementById('tt-feedback').innerHTML = `<p style="color:${correct ? 'var(--good)' : 'var(--bad)'};">${q.explanation}</p>`;
       if (correct) g.score++;
       g.index++;
-      setTimeout(ctx.render, 1400);
+      ctx.scheduleGameStep(ctx.render, 1400);
     },
     sortPick(el) {
       const g = ctx.gameState;
@@ -435,7 +449,7 @@ export function installGames(ctx) {
       ctx.dom.getElementById('sort-feedback').innerHTML = `<p style="color:${correct ? 'var(--good)' : 'var(--bad)'};">${correct ? 'Correct!' : 'It belongs to ' + ctx.CONTENT.chapters[item.chapterId].title}</p>`;
       if (correct) g.score++;
       g.index++;
-      setTimeout(ctx.render, 900);
+      ctx.scheduleGameStep(ctx.render, 900);
     },
     connAnswer(el) {
       const g = ctx.gameState;
@@ -444,7 +458,7 @@ export function installGames(ctx) {
       ctx.dom.getElementById('conn-feedback').innerHTML = `<p style="color:${correct ? 'var(--good)' : 'var(--bad)'};">${correct ? 'Correct!' : 'Best connection: ' + p.correct}</p>`;
       if (correct) g.score++;
       g.index++;
-      setTimeout(ctx.render, 1100);
+      ctx.scheduleGameStep(ctx.render, 1100);
     },
     scenAnswer(el) {
       const g = ctx.gameState;
@@ -453,7 +467,7 @@ export function installGames(ctx) {
       ctx.dom.getElementById('scen-feedback').innerHTML = `<p style="color:${correct ? 'var(--good)' : 'var(--bad)'};">${q.explanation}</p>`;
       if (correct) g.score++;
       g.index++;
-      setTimeout(ctx.render, 1600);
+      ctx.scheduleGameStep(ctx.render, 1600);
     }
   });
 }

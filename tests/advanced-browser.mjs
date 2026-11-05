@@ -287,6 +287,38 @@ try {
     await badge.click();
     assert.ok(await page.locator('#chapter-ch3 [data-src].flash').count() > 0);
   });
+
+  await step('Chapter 14 hides extras and changing chapters restores the appropriate practice tools', async () => {
+    await go('practice', 'ch9');
+    await tab('games');
+    await page.locator('[data-action="startGame"][data-game="speed"]').click();
+    await page.locator('#chapter-select').selectOption('ch14');
+    assert.equal(await page.locator('#practiceToggle [data-tab]').count(), 7);
+    assert.equal(await page.locator('#practiceToggle [data-tab="games"], #practiceToggle [data-tab="crossword"], #practiceToggle [data-tab="match"]').count(), 0);
+    assert.ok(await page.locator('#practiceContent .fc-card').isVisible());
+    await tab('session');
+    await page.locator('[data-action="buildSession"]').first().click();
+    assert.doesNotMatch(await page.locator('#practiceContent').innerText(), /Mini-game/);
+    await page.locator('#chapter-select').selectOption('ch6');
+    assert.equal(await page.locator('#practiceToggle [data-tab]').count(), 10);
+    await tab('crossword');
+    assert.equal(await page.locator('#xwChapterSelect option[value="ch14"]').count(), 0);
+    await page.locator('[data-action="xwReveal"]').click();
+    assert.ok(await page.locator('.xw-cell input').count() > 0);
+    await page.locator('#chapter-select').selectOption('ch9');
+    await page.locator('[data-action="xwReveal"]').click();
+    assert.ok(await page.locator('.xw-cell input').count() > 0);
+  });
+
+  await step('Added chapter readings and notebooks fit a mobile viewport', async () => {
+    await page.setViewportSize({width:390,height:844});
+    for (const chapter of ['ch6','ch9','ch14']) {
+      for (const section of ['textbook','notebook']) {
+        await go(section, chapter);
+        assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), `${section} ${chapter} overflows the viewport`);
+      }
+    }
+  });
   assert.deepEqual(errors, []);
   console.log(JSON.stringify({
     passed: checks.length,

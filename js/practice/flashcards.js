@@ -60,6 +60,7 @@ export function installFlashcards(ctx) {
         </div>
         <div class="fc-face back">
           <div class="fc-def">${c.definition}</div>
+          ${c.bookDefinition ? `<div class="fc-book-quote">As written in your textbook: ${ctx.escapeHTML(c.bookDefinition)}</div>` : ''}
         </div>
       </div>
     </div>

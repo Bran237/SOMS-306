@@ -68,21 +68,21 @@ try {
     await dialog;
     await page.waitForFunction(() => document.querySelector('#studio-message')?.textContent.includes('Backup imported'));
   };
-  const answerCompanion = async () => {
-    const prompt = await page.locator('#practiceContent .quiz-card h3').innerText();
-    const question = await page.evaluate(async prompt => {
+  const answerCompanion = async (target = page) => {
+    const prompt = await target.locator('#practiceContent .quiz-card h3').innerText();
+    const question = await target.evaluate(async prompt => {
       const { CONTENT } = await import(new URL('data/database.js', document.baseURI).href);
       const text = html => { const d = document.createElement('div'); d.innerHTML = html; return d.textContent.replace(/\s+/g, ' ').trim(); };
       return CONTENT.quiz.find(item => text(item.prompt) === prompt.replace(/\s+/g, ' ').trim());
     }, prompt);
     assert.ok(question, `Visible question exists in central database: ${prompt}`);
-    if (['multiple_choice', 'scenario', 'two_truths_trap'].includes(question.type)) await page.locator(`[data-action="quizAnswerMC"][data-idx="${question.correctIndex}"]`).click();
-    else if (question.type === 'true_false') await page.locator(`[data-action="quizAnswerTF"][data-val="${question.correctAnswer}"]`).click();
-    else if (question.type === 'fill_blank') { await page.locator('#quiz-fill-input').fill(String(question.acceptableAnswers?.[0] ?? question.correctAnswer)); await page.locator('[data-action="quizAnswerFill"]').click(); }
-    else if (question.type === 'matching') { for (let i = 0; i < question.pairs.length; i++) await page.locator(`#quiz-match-${i}`).selectOption(String(i)); await page.locator('[data-action="quizAnswerMatch"]').click(); }
+    if (['multiple_choice', 'scenario', 'two_truths_trap'].includes(question.type)) await target.locator(`[data-action="quizAnswerMC"][data-idx="${question.correctIndex}"]`).click();
+    else if (question.type === 'true_false') await target.locator(`[data-action="quizAnswerTF"][data-val="${question.correctAnswer}"]`).click();
+    else if (question.type === 'fill_blank') { await target.locator('#quiz-fill-input').fill(String(question.acceptableAnswers?.[0] ?? question.correctAnswer)); await target.locator('[data-action="quizAnswerFill"]').click(); }
+    else if (question.type === 'matching') { for (let i = 0; i < question.pairs.length; i++) await target.locator(`#quiz-match-${i}`).selectOption(String(i)); await target.locator('[data-action="quizAnswerMatch"]').click(); }
     else throw new Error(`Unsupported question type: ${question.type}`);
-    assert.match(await page.locator('#quiz-feedback').innerText(), /Correct!/);
-    await page.locator('#quiz-next-btn').click();
+    assert.match(await target.locator('#quiz-feedback').innerText(), /Correct!/);
+    await target.locator('#quiz-next-btn').click();
   };
   let backup, flashcardId;
 
@@ -132,6 +132,26 @@ try {
     }
     assert.equal(total, CONTENT.learningObjectives.length);
 
+  });
+
+  await step('Textbook excerpt controls show exactly the supplied substantial excerpts', async () => {
+    for (const chapterId of CONTENT.course.chapters) {
+      await route('textbook', chapterId);
+      const expected = CONTENT.chapters[chapterId].sections.map(code => CONTENT.rawSections[code]).filter(Boolean).join('\n\n');
+      const toggle = page.locator(`#chapter-${chapterId} button[aria-controls="excerpts-${chapterId}"]`);
+      if (expected.length < 3000) {
+        assert.equal(await toggle.count(), 0);
+        continue;
+      }
+      assert.equal(await toggle.innerText(), 'Show textbook excerpts on file');
+      await toggle.click();
+      const excerpts = page.locator(`#excerpts-${chapterId}`);
+      assert.equal(await excerpts.isVisible(), true);
+      assert.equal(await excerpts.textContent(), expected);
+      assert.equal(await toggle.getAttribute('aria-expanded'), 'true');
+      await toggle.click();
+      assert.equal(await excerpts.isVisible(), false);
+    }
   });
 
   await step('Notebook completion saves; homework honestly awaits uploaded assignments', async () => {
@@ -257,6 +277,58 @@ try {
     assert.equal(await page.locator('html').getAttribute('data-theme'), 'light');
     await page.locator('#theme-toggle').click();
     assert.equal(await page.locator('html').getAttribute('data-theme'), 'dark');
+  });
+
+  await step('Added chapters support flashcards, recall, quizzes, and existing saved progress', async () => {
+    const added = await browser.newPage({ viewport:{width:1440,height:1000} });
+    added.on('pageerror', error => errors.push(error.message));
+    await added.addInitScript(() => {
+      const key = 'soms306_mastery_studio_v1';
+      if (!localStorage.getItem(key)) localStorage.setItem(key, JSON.stringify({
+        schemaVersion:1,
+        companion:{xp:24,flashcardStatus:{competitiveness:'know'},quizAttempts:[{id:'q1',conceptId:'competitiveness',lo:'2.1',correct:true,ts:1}]},
+        notebook:{done:{'ch1:1.1':true}},settings:{theme:'dark'},navigation:{section:'dashboard',chapterId:'ch1'}
+      }));
+    });
+    const learned = [];
+    for (const chapterId of ['ch6','ch9','ch14']) {
+      await added.goto(`${base}#/practice/${chapterId}`);
+      await added.locator('#practiceToggle [data-tab="flashcards"]').click();
+      const mark = added.locator('[data-action="markFlashcard"][data-status="know"]').first();
+      await mark.waitFor();
+      const cardId = await mark.getAttribute('data-id');
+      learned.push(cardId);
+      const concept = CONTENT.concepts.find(c => c.id === cardId && c.chapterId === chapterId);
+      assert.ok(concept);
+      await added.locator('.fc-card').click();
+      assert.ok((await added.locator('.fc-book-quote').textContent()).includes(concept.bookDefinition));
+      await mark.click();
+      await added.locator('#practiceToggle [data-tab="recall"]').click();
+      await added.locator('[data-action="arReveal"]').click();
+      const rating = added.locator('[data-action="arRate"][data-rating="easy"]');
+      const recalledId = await rating.getAttribute('data-id');
+      assert.ok(CONTENT.concepts.some(c => c.id === recalledId && c.chapterId === chapterId));
+      await rating.click();
+      await added.locator('#practiceToggle [data-tab="quiz"]').click();
+      assert.equal(await added.locator('#qs-scope').inputValue(), `chapter:${chapterId}`);
+      await added.locator('#qs-count').selectOption('5');
+      await added.locator('[data-action="quizBegin"]').click();
+      for (let n = 0; n < 5; n++) await answerCompanion(added);
+      assert.equal(await added.locator('#practiceContent .stat-value').innerText(), '5/5');
+    }
+    await added.locator('#course-search').fill('Lean operations');
+    await added.locator('#search-results [data-concept="lean-operations"]').click();
+    const quoted = CONTENT.concepts.find(c => c.id === 'lean-operations').bookDefinition;
+    assert.equal(await added.locator('#modalRoot .bq-text').textContent(), quoted);
+    await added.keyboard.press('Escape');
+    await added.reload();
+    const progress = await state(added);
+    assert.equal(progress.companion.flashcardStatus.competitiveness, 'know');
+    assert.equal(progress.notebook.done['ch1:1.1'], true);
+    assert.ok(progress.companion.quizAttempts.some(q => q.id === 'q1' && q.ts === 1));
+    for (const id of learned) assert.equal(progress.companion.flashcardStatus[id], 'know');
+    assert.equal(progress.companion.quizAttempts.length, 19);
+    await added.close();
   });
 
   assert.deepEqual(errors, [], 'Unexpected JavaScript page errors');

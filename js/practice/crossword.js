@@ -166,7 +166,7 @@ export function installCrossword(ctx) {
   ctx.viewCrosswordGame = function viewCrosswordGame() {
     if (!ctx.xwState) ctx.xwState = ctx.buildCrossword(ctx.CONTENT.crossword && ctx.CONTENT.crossword[ctx.xwChapter] || []);
     const xw = ctx.xwState;
-    const chapters = ctx.CONTENT.course.chapters.map(id => ctx.CONTENT.chapters[id]);
+    const chapters = ctx.CONTENT.course.chapters.map(id => ctx.CONTENT.chapters[id]).filter(ch => !ch.noMiniGames);
     let gridHtml = `<div class="xw-grid" style="grid-template-columns:repeat(${xw.cols},25px);grid-template-rows:repeat(${xw.rows},25px);display:grid;">`;
     for (let r = 0; r < xw.rows; r++) {
       for (let c = 0; c < xw.cols; c++) {

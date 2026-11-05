@@ -16,11 +16,22 @@ function readingNotes(blocks, fallback){
   return paragraphs.length ? paragraphs.slice(0, 3) : [text(fallback)];
 }
 
+function readingFormulas(blocks){
+  return [...new Set(blocks.flatMap(block => [...block.html.matchAll(/<div\b[^>]*class=["'][^"']*\b(?:fc-main|formula-eq)\b[^"']*["'][^>]*>([\s\S]*?)<\/div>/g)].map(match => match[1].trim())))];
+}
+
 export const NOTEBOOK_CHAPTERS = CONTENT.course.chapters.map(id => {
   const chapter = CONTENT.chapters[id];
   const objectives = CONTENT.learningObjectives.filter(lo => lo.chapterId === id);
   const concepts = CONTENT.concepts.filter(concept => concept.chapterId === id);
   const questions = CONTENT.quiz.filter(q => q.chapterId === id);
+  const conceptFormulas = concepts.filter(c => c.formula).map(c => ({formula:c.formula, label:text(c.term)}));
+  const seenFormulas = new Set(conceptFormulas.map(item => item.formula));
+  const proseFormulas = objectives.flatMap(lo => readingFormulas(CONTENT.loProse[lo.code] || []).flatMap(formula => {
+    if (seenFormulas.has(formula)) return [];
+    seenFormulas.add(formula);
+    return [{formula, label:`LO ${lo.code} · ${text(lo.text)}`}];
+  }));
   const quiz = questions.flatMap(q => {
     if (Array.isArray(q.options) && Number.isInteger(q.correctIndex)) return [{q:q.prompt, o:q.options, a:q.correctIndex, e:q.explanation}];
     if (q.type === 'true_false') return [{q:q.prompt, o:['True','False'], a:q.correctAnswer ? 0 : 1, e:q.explanation}];
@@ -39,7 +50,7 @@ export const NOTEBOOK_CHAPTERS = CONTENT.course.chapters.map(id => {
         title:text(lo.text),
         notes:terms.length ? terms.map(c => text(c.plain || c.definition)) : readingNotes(blocks, lo.text),
         terms:terms.map(c => [text(c.term), text(c.definition)]),
-        formulas:terms.filter(c => c.formula).map(c => c.formula),
+        formulas:[...new Set([...terms.filter(c => c.formula).map(c => c.formula), ...readingFormulas(blocks)])],
         explain:blocks.map(block => `<h4>${block.heading}</h4>${block.html}`).join(''),
         hw:[],
       };
@@ -48,11 +59,12 @@ export const NOTEBOOK_CHAPTERS = CONTENT.course.chapters.map(id => {
     homeworkConcept:[],
     missingHw:['Homework problems and worked solutions have not been uploaded yet. They will appear here and beside their related notebook sections once supplied.'],
     calcNote:'Calculator instructions will be included with your homework when the original problems are supplied.',
-    cards:concepts.map(c => ({f:text(c.term), b:text(c.definition), k:'term'})).concat(concepts.filter(c => c.formula).map(c => ({f:text(c.term), b:c.formula, k:'formula'}))),
+    // Append reading formulas after existing cards to preserve saved card indexes.
+    cards:concepts.map(c => ({f:text(c.term), b:text(c.definition), k:'term'})).concat([...conceptFormulas, ...proseFormulas].map(item => ({f:item.label, b:item.formula, k:'formula'}))),
     quiz,
     exam:{
       concepts:concepts.filter(c => c.tier === 'must_know').map(c => text(c.term) + ': ' + text(c.definition)),
-      formulas:concepts.filter(c => c.formula).map(c => [c.formula, text(c.term)]),
+      formulas:[...conceptFormulas, ...proseFormulas].map(item => [item.formula, item.label]),
       mistakes:concepts.filter(c => c.commonMistake).map(c => text(c.commonMistake)),
       diffs:[],
       selftest:quiz.slice(0,5).map((_,i) => i),

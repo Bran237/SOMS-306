@@ -56,7 +56,8 @@ export function installSessions(ctx) {
       minutes: alloc(0.3),
       action: 'quiz'
     });
-    plan.push({
+    if (ctx.CONTENT.chapters[ctx.chapterId]?.noMiniGames) plan[2].minutes += alloc(0.15);
+    else plan.push({
       label: 'Mini-game',
       minutes: alloc(0.15),
       action: 'game'

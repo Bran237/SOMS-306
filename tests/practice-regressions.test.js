@@ -3,6 +3,10 @@ import assert from 'node:assert/strict';
 import { installFlashcards } from '../js/practice/flashcards.js';
 import { installMatching } from '../js/practice/matching.js';
 import { installExam } from '../js/practice/exam.js';
+import { installPractice } from '../js/modules/practice.js';
+import { installRecall } from '../js/practice/recall.js';
+import { installSessions } from '../js/practice/sessions.js';
+import { installGames } from '../js/practice/games.js';
 
 test('an empty flashcard filter stays empty and retains recovery controls', () => {
   const concepts = [{ id: 'c1', chapterId: 'ch3', tier: 'must_know' }];
@@ -47,4 +51,51 @@ test('exam matching questions render choices and record one answer per question'
   assert.equal(ctx.examState.answers[0].correct, true);
   assert.equal(ctx.PROGRESS.quizAttempts.length, 1);
   assert.equal(saves, 1);
+});
+
+test('chapter-specific practice restrictions preserve ordinary tools and remove all three extras', () => {
+  const ctx = { ACTIONS:{}, chapterId:'ch14', CONTENT:{chapters:{ch14:{noMiniGames:true},ch9:{}}} };
+  installPractice(ctx);
+  installSessions(ctx);
+  assert.deepEqual(ctx.availablePracticeTabs().map(tab => tab.key), ['flashcards','quiz','recall','cards','exam','weak','session']);
+  assert.ok(ctx.buildSessionPlan(20).every(step => step.action !== 'game'));
+  ctx.chapterId = 'ch9';
+  assert.equal(ctx.availablePracticeTabs().length, 10);
+  assert.ok(ctx.buildSessionPlan(20).some(step => step.action === 'game'));
+});
+
+test('active recall uses the selected chapter when building a new queue', () => {
+  const requested = [];
+  const ctx = {ACTIONS:{}, chapterId:'ch14', shuffleArr:items => items,
+    dueConcepts:id => {requested.push(id); return [{id:`${id}-concept`}];}};
+  installRecall(ctx);
+  ctx.initActiveRecall();
+  assert.equal(ctx.arState.chapterId, 'ch14');
+  assert.equal(ctx.arState.queue[0].id, 'ch14-concept');
+  ctx.chapterId = 'ch6';
+  ctx.initActiveRecall();
+  assert.deepEqual(requested, ['ch14','ch6']);
+});
+
+test('pending mini-game callbacks cannot reset another activity or a new game', t => {
+  t.mock.timers.enable({apis:['setTimeout']});
+  const ctx = {ACTIONS:{}, MAIN_MODE:'practice', PRACTICE_TAB:'games'};
+  installGames(ctx);
+  let calls = 0;
+  ctx.scheduleGameStep(() => calls++, 900);
+  ctx.PRACTICE_TAB = 'exam';
+  t.mock.timers.tick(1000);
+  assert.equal(calls, 0);
+  ctx.PRACTICE_TAB = 'games';
+  ctx.scheduleGameStep(() => calls++, 900);
+  ctx.gameState = {type:'sort'};
+  t.mock.timers.tick(1000);
+  assert.equal(calls, 0);
+  ctx.scheduleGameStep(() => calls++, 900);
+  ctx.cancelGameTimeouts();
+  t.mock.timers.tick(1000);
+  assert.equal(calls, 0);
+  ctx.scheduleGameStep(() => calls++, 900);
+  t.mock.timers.tick(1000);
+  assert.equal(calls, 1);
 });

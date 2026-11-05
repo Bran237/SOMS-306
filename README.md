@@ -27,12 +27,20 @@ subpaths. `.nojekyll` is included.
 | Study | Guided reading and complete term review, gated flashcards, chapter quizzes, missed-answer correction, exam review and checklists, slide and video tools |
 | Practice | Flashcards, quiz, matching, crossword, active recall, concept cards, ten mini games, timed exams, weak areas, study sessions, Notebook cards and quizzes |
 
-The full original course content is preserved: five chapters, 55 objectives,
-155 concepts, 64 questions, ten case studies, and all readings and examples.
+The uploaded course content covers Chapters 1–6, 9, and 14: 88 objectives,
+339 concepts, 159 questions, 18 case studies, and all supplied readings and examples.
 Notebook outlines, summaries, cards, and review material derive from that existing
 operations-management content. No FIN-303 educational data is included.
 
-Homework, slides, video references, and remaining chapters have not been supplied.
+The latest companion upload adds Process Selection and Facility Layout (6),
+Management of Quality (9), and Lean Operations (14), plus an updated in-house
+versus outsourcing reading in Chapter 5. Substantial textbook excerpts can be
+expanded from Textbook; shorter source fragments are not presented as full
+chapter excerpts. Supplied textbook quotations appear in concept popups and
+flashcards. Chapter 14 omits matching, crossword, and mini-games as specified in
+the source. Its study sessions use additional quiz practice instead of games.
+
+Homework, slides, video references, and other chapters have not been supplied.
 Their tools are implemented, with absence notices in place of invented material.
 When those sources arrive, integrate them through the shared content registry; see
 `data/README.md`.

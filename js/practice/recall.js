@@ -7,13 +7,14 @@ export function installRecall(ctx) {
   };
   ctx.initActiveRecall = function initActiveRecall() {
     ctx.arState = {
-      queue: ctx.shuffleArr(ctx.dueConcepts()),
+      chapterId: ctx.chapterId,
+      queue: ctx.shuffleArr(ctx.dueConcepts(ctx.chapterId)),
       index: 0,
       revealed: false
     };
   };
   ctx.viewActiveRecall = function viewActiveRecall() {
-    if (!ctx.arState.queue.length) ctx.initActiveRecall();
+    if (!ctx.arState.queue.length || ctx.arState.chapterId !== ctx.chapterId) ctx.initActiveRecall();
     const c = ctx.arState.queue[ctx.arState.index];
     if (!c) return `<div class="panel-header"><h1>Active Recall</h1></div><div class="empty-state">Session complete — nice work! <br><button class="btn small" style="margin-top:10px;" data-action="arRestart">Start Another Round</button></div>`;
     return `

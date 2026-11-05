@@ -65,6 +65,7 @@ export function mountCompanion(root, options) {
   };
   [installShared, installModals, installProgress, installDashboard, installTextbook, installStudy, installPractice, installMatching, installCrossword, installFlashcards, installQuiz, installRecall, installGames, installExam, installSessions, installEvents, installLifecycle].forEach(fn => fn(ctx));
   function stopActivities() {
+    ctx.cancelGameTimeouts();
     clearInterval(ctx.examState.timerId);
     clearInterval(ctx.gameState.timerId);
     ctx.gameState.timerId = null;
@@ -72,6 +73,10 @@ export function mountCompanion(root, options) {
   }
   function selectChapter(id, emit = true) {
     if (!CONTENT.chapters[id]) return;
+    if (ctx.chapterId !== id) {
+      stopActivities();
+      ctx.sessionState.phase = 'setup';
+    }
     ctx.chapterId = id;
     root.querySelectorAll('.chapter-study').forEach(el => {
       el.hidden = el.id !== `chapter-${id}`;

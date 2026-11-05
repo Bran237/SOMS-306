@@ -3,7 +3,7 @@ import { NOTEBOOK_CHAPTERS } from './notebook-source.js';
 
 export { COURSE_CONTENT as CONTENT, NOTEBOOK_CHAPTERS };
 
-const SOURCE_COMPANION = 'SOMS-306 original index.html';
+const SOURCE_COMPANION = 'Operations Management Study Companion.html';
 const SOURCE_NOTEBOOK = 'Notebook derived from SOMS-306 course content';
 const NOTEBOOK_OBJECTIVE_MAP = {};
 const supplementalObjectives = [];

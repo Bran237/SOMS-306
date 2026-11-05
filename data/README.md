@@ -1,15 +1,21 @@
 # Course content and future uploads
 
-- `course.js`: the exact original SOMS-306 content object, preserved from the source commit.
+- `course.js`: the exact content object extracted from the uploaded Operations Management Study Companion.html.
 - `content.js`: runtime normalization of a repeated source concept identifier. Chapter 1 and Chapter 2 each retain their own supply-chain-management definition and progress.
 - `notebook-source.js`: Notebook outlines, cards, quizzes, summaries, and exam review derived from the course; future homework and resource records belong here.
 - `database.js`: canonical chapter/objective registry and links between all modules.
-- `provenance.json`: original content fingerprint and source repository commits.
+- `provenance.json`: uploaded file and extracted-content fingerprints, original content provenance, and source repository commits.
 
-The current chapters are `ch1`–`ch5`. Add future chapters to `course.chapters` and
+The current chapters are `ch1`–`ch6`, `ch9`, and `ch14`. Add future chapters to `course.chapters` and
 `chapters`, together with objectives, concepts, readings, and questions. The shell
 and chapter selector derive their options from those records; storage accepts
 future positive chapter numbers.
+
+The latest upload preserves the existing concept and question identifiers, adds
+Chapters 6, 9, and 14, and revises the Chapter 5 outsourcing explanation. Preserve
+these stable identifiers so old quizzes, flashcards, and Notebook progress keep
+their meaning. `noMiniGames: true` on Chapter 14 excludes matching, crossword, and
+mini-games; its quizzes, cards, recall, exams, and study sessions remain available.
 
 Keep each original homework question and label. A worked problem uses:
 

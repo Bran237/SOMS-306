@@ -10,11 +10,15 @@ The module hosts keep event delegation and queries local. Feature controls must 
 
 ## Content registry
 
-`data/course.js` preserves the complete original SOMS-306 content object. `data/notebook-source.js` derives Notebook sections, cards, quizzes, summaries, and exam review from those operations-management readings and concepts. It carries no FIN-303 educational material. The Notebook uses objective labels and the shared registry maps those labels to canonical objectives without finance-specific numbering exceptions.
+`data/course.js` preserves the complete content object extracted from the uploaded Operations Management Study Companion.html, including Chapters 1–6, 9, and 14. `data/content.js` gives repeated concept IDs distinct runtime identities without changing the source. `data/notebook-source.js` derives Notebook sections, cards, quizzes, summaries, and exam review from those operations-management readings and concepts. It carries no FIN-303 educational material. The Notebook uses objective labels and the shared registry maps those labels to canonical objectives without finance-specific numbering exceptions.
 
 Homework arrays are empty until assignments are supplied. The original FIN-303 problem, solution, calculator-step, assignment-label, and completion renderers are retained. To add homework, fill `homework` / `homeworkConcept` and link each problem from the relevant section's `hw` array. Keep original question statements, worked steps, and source labels. Slides and video renderers show absence notices until source material exists. Do not invent missing source material.
 
-The provenance manifest fingerprints the original course and records the source app commits. Content-preservation tests verify the full original object, including all readings and examples. Add future chapters to `course.chapters` and `chapters`, then supply objectives, prose, concepts, and questions. No layout rewrite is needed.
+The provenance manifest fingerprints both the uploaded HTML and the extracted course object and retains the original repository provenance. Content-preservation tests verify the full supplied object, including all readings and examples. Add future chapters to `course.chapters` and `chapters`, then supply objectives, prose, concepts, and questions. No layout rewrite is needed.
+
+Chapter-level `noMiniGames` controls which Practice tabs and generated session activities are available. Practice updates its tabs when the selected chapter changes, and recall queues use that chapter's concepts. Switching activities or chapters cancels pending game callbacks as well as timers so they cannot reset another activity's fields. Textbook excerpt controls appear only when the chapter has at least 3,000 characters of supplied raw text, following the uploaded app's behavior.
+
+Notebook formulas include both concept-level formulas and equations printed in the readings. Reading equations are copied as supplied and appended after existing Notebook cards so saved card indexes remain stable. Concept popups and Companion flashcards also show supplied textbook quotations.
 
 ## Progress store
 

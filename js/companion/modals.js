@@ -29,6 +29,7 @@ export function installModals(ctx) {
       ${stat ? `<span class="lo-chip" style="background:var(--paper-2);">Your accuracy: ${stat.accuracy}%</span>` : ''}
     </div>
     <h2 style="margin-bottom:10px;">${c.term}</h2>
+    ${c.bookDefinition ? `<div class="book-quote"><div class="bq-label">As written in your textbook</div><div class="bq-text">${ctx.escapeHTML(c.bookDefinition)}</div></div>` : ''}
     ${c.formula ? `<div class="formula-box" style="margin-bottom:14px;"><span class="formula-label">Formula</span><div class="formula-eq">${c.formula}</div></div>` : ''}
     <div class="concept-field"><div class="fl">DEFINITION</div><div class="fv">${c.definition}</div></div>
     ${c.plain ? `<div class="concept-field"><div class="fl">PLAIN-ENGLISH EXPLANATION</div><div class="fv">${c.plain}</div></div>` : ''}

@@ -53,6 +53,18 @@ export function installTextbook(ctx) {
         </div>`).join('');
         chWrap.appendChild(cwrap);
       }
+      const excerpts = (ch.sections || []).map(code => ctx.CONTENT.rawSections?.[code]).filter(Boolean).join('\n\n');
+      if (excerpts.length >= 3000) {
+        const toggle = ctx.el(`<button class="btn small ghost" style="margin-bottom:14px;" aria-expanded="false" aria-controls="excerpts-${ch.id}">Show textbook excerpts on file</button>`);
+        const excerptBox = ctx.el(`<div class="card textbook-excerpts" id="excerpts-${ch.id}" hidden></div>`);
+        excerptBox.textContent = excerpts;
+        toggle.addEventListener('click', () => {
+          excerptBox.hidden = !excerptBox.hidden;
+          toggle.setAttribute('aria-expanded', String(!excerptBox.hidden));
+          toggle.textContent = excerptBox.hidden ? 'Show textbook excerpts on file' : 'Hide textbook excerpts';
+        });
+        chWrap.append(toggle, excerptBox);
+      }
       chWrap.appendChild(ctx.el(`<div class="gloss-banner"><h3>Glossary <span class="gloss-note">(click a term to jump to it &middot; red dot = must-know)</span></h3></div>`));
       const table = ctx.el('<table class="gloss"><thead><tr><th>Term</th><th>Definition</th></tr></thead><tbody></tbody></table>');
       const tbody = table.querySelector('tbody');

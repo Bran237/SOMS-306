@@ -31,20 +31,29 @@ export function installPractice(ctx) {
     key: 'session',
     label: 'Study Session'
   }];
+  ctx.availablePracticeTabs = function availablePracticeTabs() {
+    const hideExtras = ctx.CONTENT.chapters[ctx.chapterId]?.noMiniGames;
+    return ctx.PRACTICE_TABS.filter(tab => !(hideExtras && ['match', 'crossword', 'games'].includes(tab.key)));
+  };
   ctx.renderPracticeShell = function renderPracticeShell() {
     const panel = ctx.dom.getElementById('modePanelPractice');
     if (!panel) return;
+    const tabs = ctx.availablePracticeTabs();
+    if (!tabs.some(tab => tab.key === ctx.PRACTICE_TAB)) ctx.PRACTICE_TAB = 'flashcards';
     panel.innerHTML = `
     <p class="chapter-kicker">Practice</p>
     <h1 class="chapter-title">Practice Tools</h1>
     <div class="practice-toggle" id="practiceToggle">
-      ${ctx.PRACTICE_TABS.map(t => `<button data-tab="${t.key}" class="${ctx.PRACTICE_TAB === t.key ? 'active' : ''}">${t.label}</button>`).join('')}
+      ${tabs.map(t => `<button data-tab="${t.key}" class="${ctx.PRACTICE_TAB === t.key ? 'active' : ''}">${t.label}</button>`).join('')}
     </div>
     <div id="practiceContent"></div>
   `;
     ctx.dom.querySelectorAll('#practiceToggle button').forEach(b => b.addEventListener('click', () => ctx.setPracticeTab(b.dataset.tab)));
   };
   ctx.renderPracticeContent = function renderPracticeContent() {
+    const tabKeys = ctx.availablePracticeTabs().map(tab => tab.key);
+    const barKeys = [...ctx.dom.querySelectorAll('#practiceToggle button')].map(button => button.dataset.tab);
+    if (!tabKeys.includes(ctx.PRACTICE_TAB) || tabKeys.join() !== barKeys.join()) ctx.renderPracticeShell();
     const bar = ctx.dom.getElementById('practiceToggle');
     if (bar) bar.querySelectorAll('button').forEach(b => b.classList.toggle('active', b.dataset.tab === ctx.PRACTICE_TAB));
     const c = ctx.dom.getElementById('practiceContent');
