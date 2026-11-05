@@ -5,6 +5,11 @@
 .companion-suite .bq-text{font-style:italic;font-size:14px;line-height:1.5;}
 .companion-suite .fc-book-quote{font-style:italic;font-size:12.5px;line-height:1.5;color:var(--ink-soft);border-top:1px dashed var(--rule);padding-top:8px;margin-top:8px;}
 .companion-suite .fc-face.back{overflow-y:auto;justify-content:safe center;}
+.companion-suite .chapter-sources{border:1px solid var(--rule);border-radius:10px;padding:14px;margin-bottom:24px;}
+.companion-suite .chapter-sources summary{cursor:pointer;font-weight:700;}
+.companion-suite .source-pages figure{margin:16px 0;border-top:1px solid var(--rule);padding-top:12px;}
+.companion-suite .source-pages figcaption{font-size:13px;margin-bottom:8px;}
+.companion-suite .source-pages img{display:block;width:100%;height:auto;max-width:100%;}
 .formula-card{background:var(--paper-2);border:1px solid var(--rule);border-radius:10px;padding:16px 18px;margin:14px 0;}
 .formula-card .fc-title{font-family:var(--font-mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-soft);margin-bottom:10px;}
 .formula-card .fc-main{font-family:var(--font-head);font-size:19px;font-weight:700;text-align:center;padding:14px 10px;background:var(--card);border:1px solid var(--rule);border-radius:8px;margin-bottom:12px;color:var(--ink);letter-spacing:.01em;}

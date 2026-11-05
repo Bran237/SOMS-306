@@ -8,6 +8,7 @@ export function installNotebook(ctx) {
     }
     const notes = {};
     let h = '<h2>' + ctx.ch.title + '</h2>';
+    if (ctx.ch.coverageNote) h += '<div class="callout">' + ctx.ch.coverageNote + '</div>';
     h += '<div class="nbactions"><button class="btn primary" type="button" data-act="print">Print notebook</button><button class="btn" type="button" data-act="expand">Show all solutions</button><button class="btn" type="button" data-act="collapse">Hide all solutions</button></div>';
     h += '<div class="progress" id="nbProg"></div>';
     h += '<p class="hint">For each section: <b>A. Write this down</b> (copy into your notebook), then <b>B. Related homework</b> (try it, then open the solution). <i>Explain it to me</i> is optional reading and is not for copying.</p>';

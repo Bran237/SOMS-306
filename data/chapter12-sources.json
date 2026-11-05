@@ -1,0 +1,260 @@
+{
+  "source": "C12.zip",
+  "sha256": "441cbc16d2a58f5cdf1aeba1abcdc6476217b79bfb2465d0dfde6ad932efb342",
+  "chapter": "Inventory Management",
+  "coverage": "36 screenshots covering the chapter outline, learning objectives, sections 12.1\u201312.8, and Examples 1\u201314. Section 12.9, the rest of Table 12.3, and later exercises/cases were not supplied.",
+  "screenshots": [
+    {
+      "index": 1,
+      "originalName": "Screenshot 2026-11-04 194436.png",
+      "asset": "assets/ch12/source-01.png",
+      "bytes": 803054,
+      "sha256": "3c82aedf794eca2bb4171f7d944fc6593570613f7e2e197039031bd477e584f8"
+    },
+    {
+      "index": 2,
+      "originalName": "Screenshot 2026-11-04 194440.png",
+      "asset": "assets/ch12/source-02.png",
+      "bytes": 2304959,
+      "sha256": "9e1e4d66e408b3a482fb7caf7cb8d175aa08770d98cb715e4519eebc630de5d6"
+    },
+    {
+      "index": 3,
+      "originalName": "Screenshot 2026-11-04 194445.png",
+      "asset": "assets/ch12/source-03.png",
+      "bytes": 759880,
+      "sha256": "e799c1fa6048b4a6f2a75e9d335e56b143bffe9138eed92360e2f527b083ea73"
+    },
+    {
+      "index": 4,
+      "originalName": "Screenshot 2026-11-04 194449.png",
+      "asset": "assets/ch12/source-04.png",
+      "bytes": 1465313,
+      "sha256": "4a6337caf93e3eb656ce10191297e3f9290548275620cdea47962d2d8b6def73"
+    },
+    {
+      "index": 5,
+      "originalName": "Screenshot 2026-11-04 194454.png",
+      "asset": "assets/ch12/source-05.png",
+      "bytes": 1018549,
+      "sha256": "4ecce25d02e20bb7b7bcdda908efe792c6a4ca2841a4145ddac619ff5ef8a074"
+    },
+    {
+      "index": 6,
+      "originalName": "Screenshot 2026-11-04 194459.png",
+      "asset": "assets/ch12/source-06.png",
+      "bytes": 509653,
+      "sha256": "d90cd1a7e13e654a6b792a8ccee2c5a4cec2d0aa2f8d8130b273e0f7d85785e0"
+    },
+    {
+      "index": 7,
+      "originalName": "Screenshot 2026-11-04 194505.png",
+      "asset": "assets/ch12/source-07.png",
+      "bytes": 938376,
+      "sha256": "288edb89e972f24f9cbcda2c9c3fd1e620b60220c774ed141940d18ceba4f36e"
+    },
+    {
+      "index": 8,
+      "originalName": "Screenshot 2026-11-04 194509.png",
+      "asset": "assets/ch12/source-08.png",
+      "bytes": 1772023,
+      "sha256": "afea201b7f994154361adce63e5a62ce289837d68fcffca379060f01a612c8dd"
+    },
+    {
+      "index": 9,
+      "originalName": "Screenshot 2026-11-04 194514.png",
+      "asset": "assets/ch12/source-09.png",
+      "bytes": 988134,
+      "sha256": "cc3dbe18d72157e124d06b6775ba6ddc123afce7f5cad93b66074ba6eb234692"
+    },
+    {
+      "index": 10,
+      "originalName": "Screenshot 2026-11-04 194519.png",
+      "asset": "assets/ch12/source-10.png",
+      "bytes": 2319095,
+      "sha256": "d198020ff3168cf671022ce2d3ca87a9b1c7703e28405ec1e48bfb321a9a56eb"
+    },
+    {
+      "index": 11,
+      "originalName": "Screenshot 2026-11-04 194522.png",
+      "asset": "assets/ch12/source-11.png",
+      "bytes": 545002,
+      "sha256": "a1e2b7224a3bafd2e680e39f90181111f8bd3d3555a744dc34ca3d99bf3ac3a1"
+    },
+    {
+      "index": 12,
+      "originalName": "Screenshot 2026-11-04 194527.png",
+      "asset": "assets/ch12/source-12.png",
+      "bytes": 856857,
+      "sha256": "72434488612f5275347a2d5ab13140e6115c792b8f3f5fc05980b436504917d3"
+    },
+    {
+      "index": 13,
+      "originalName": "Screenshot 2026-11-04 194532.png",
+      "asset": "assets/ch12/source-13.png",
+      "bytes": 582570,
+      "sha256": "da7226d8e60a36467ba9487cda066c689155141bb69454c2989d387e58f2f1e5"
+    },
+    {
+      "index": 14,
+      "originalName": "Screenshot 2026-11-04 194536.png",
+      "asset": "assets/ch12/source-14.png",
+      "bytes": 356179,
+      "sha256": "d856c4f9292b71b8c9b90473733f30217b37fa18ccdc3d2076737d1332447d6a"
+    },
+    {
+      "index": 15,
+      "originalName": "Screenshot 2026-11-04 194541.png",
+      "asset": "assets/ch12/source-15.png",
+      "bytes": 967026,
+      "sha256": "28042a604784fbfc421aab060a309754ffbdfc9c89266521c7fa0b4acff557dc"
+    },
+    {
+      "index": 16,
+      "originalName": "Screenshot 2026-11-04 194545.png",
+      "asset": "assets/ch12/source-16.png",
+      "bytes": 932595,
+      "sha256": "5a0a82c718f86a8d5b7a7282d7ebf0393ac37d1ea814cc39f5475076b63884d1"
+    },
+    {
+      "index": 17,
+      "originalName": "Screenshot 2026-11-04 194550.png",
+      "asset": "assets/ch12/source-17.png",
+      "bytes": 650264,
+      "sha256": "ccd07b08b3521ecfe1045ecc91140bd6dcee97488ba16e16346323493d53a02c"
+    },
+    {
+      "index": 18,
+      "originalName": "Screenshot 2026-11-04 194606.png",
+      "asset": "assets/ch12/source-18.png",
+      "bytes": 865965,
+      "sha256": "3cc377c0f1b7cefa3c18f662ec81c622f0fa74b12a3fade1937ee6aac9fd9f03"
+    },
+    {
+      "index": 19,
+      "originalName": "Screenshot 2026-11-04 194611.png",
+      "asset": "assets/ch12/source-19.png",
+      "bytes": 985655,
+      "sha256": "a1afd1812a397305b91c0c02f50b21d0ecf86c8b30014175073e7280816629b5"
+    },
+    {
+      "index": 20,
+      "originalName": "Screenshot 2026-11-04 194616.png",
+      "asset": "assets/ch12/source-20.png",
+      "bytes": 681344,
+      "sha256": "0e82c4ed62acce7a47ea9c65d8fa708c21e31bd12028195c0a9325ba9c51d2f8"
+    },
+    {
+      "index": 21,
+      "originalName": "Screenshot 2026-11-04 194621.png",
+      "asset": "assets/ch12/source-21.png",
+      "bytes": 800609,
+      "sha256": "b70e8248067c4dc087811694702b213b9b986b6f333ada4757111a71fdb7c731"
+    },
+    {
+      "index": 22,
+      "originalName": "Screenshot 2026-11-04 194625.png",
+      "asset": "assets/ch12/source-22.png",
+      "bytes": 1056810,
+      "sha256": "21852e1810c9e2a9b809997387602224b89e5d5d26c3f80ea3b20ff64199ff07"
+    },
+    {
+      "index": 23,
+      "originalName": "Screenshot 2026-11-04 194628.png",
+      "asset": "assets/ch12/source-23.png",
+      "bytes": 912242,
+      "sha256": "e0ff2928f471b96a6081a5bf930e58fc30ed47248e96cb5788fe3256b5ec3df7"
+    },
+    {
+      "index": 24,
+      "originalName": "Screenshot 2026-11-04 194632.png",
+      "asset": "assets/ch12/source-24.png",
+      "bytes": 887531,
+      "sha256": "e6d9fb857619025da72d23b9c7e3fb1e1d42f71ad0f93b416f61872533c0d797"
+    },
+    {
+      "index": 25,
+      "originalName": "Screenshot 2026-11-04 194637.png",
+      "asset": "assets/ch12/source-25.png",
+      "bytes": 797045,
+      "sha256": "418dfde6cb173bda485192eee683e33ad92c99edb0be1fb05bba0454b9ed316a"
+    },
+    {
+      "index": 26,
+      "originalName": "Screenshot 2026-11-04 194643.png",
+      "asset": "assets/ch12/source-26.png",
+      "bytes": 825843,
+      "sha256": "5f975600bde752f825ea08322cefd4cce7d05d011bca3133e273ba1c6a99cbe5"
+    },
+    {
+      "index": 27,
+      "originalName": "Screenshot 2026-11-04 194647.png",
+      "asset": "assets/ch12/source-27.png",
+      "bytes": 917665,
+      "sha256": "b861096f5fca27886644483458c25a9628ae4a7490824c1def6e45cc8b40bb38"
+    },
+    {
+      "index": 28,
+      "originalName": "Screenshot 2026-11-04 194651.png",
+      "asset": "assets/ch12/source-28.png",
+      "bytes": 828573,
+      "sha256": "ad60d0b24e39d8d6c979d8e3b803ba5301e7d719c8e5cf0b1e575f70abbefa3d"
+    },
+    {
+      "index": 29,
+      "originalName": "Screenshot 2026-11-04 194655.png",
+      "asset": "assets/ch12/source-29.png",
+      "bytes": 812315,
+      "sha256": "3091f6a12db11e1e556833d30ff7b4d0e56ab244621bf4c1053fec2ec43bb902"
+    },
+    {
+      "index": 30,
+      "originalName": "Screenshot 2026-11-04 194700.png",
+      "asset": "assets/ch12/source-30.png",
+      "bytes": 617157,
+      "sha256": "b8c8f5f6ce93a7ec106fc16621dbb567e05e8750c8bfaf6f2e01d7dcda0eafc4"
+    },
+    {
+      "index": 31,
+      "originalName": "Screenshot 2026-11-04 194706.png",
+      "asset": "assets/ch12/source-31.png",
+      "bytes": 944602,
+      "sha256": "995dd95683831db1595916c31629c8afd749cd5232ac641d7f47a13ccdaa1b1d"
+    },
+    {
+      "index": 32,
+      "originalName": "Screenshot 2026-11-04 194709.png",
+      "asset": "assets/ch12/source-32.png",
+      "bytes": 1024000,
+      "sha256": "46a0dc5f4396ef8717816aad2762933d6c9720372a557e0de1b1bf04c57d52a6"
+    },
+    {
+      "index": 33,
+      "originalName": "Screenshot 2026-11-04 194713.png",
+      "asset": "assets/ch12/source-33.png",
+      "bytes": 676376,
+      "sha256": "a02d47463b9755ee12514ebfa74be68ecbe9e16dc2d9384e0e3fa0f96e711101"
+    },
+    {
+      "index": 34,
+      "originalName": "Screenshot 2026-11-04 194718.png",
+      "asset": "assets/ch12/source-34.png",
+      "bytes": 918832,
+      "sha256": "e975f775dfadd4a3d520051ecba1175bd363e0683551f0a88075db48ad2b9711"
+    },
+    {
+      "index": 35,
+      "originalName": "Screenshot 2026-11-04 194722.png",
+      "asset": "assets/ch12/source-35.png",
+      "bytes": 779217,
+      "sha256": "50f6592aef0bc604306a67fce9ed0f11a845244eefd24ab45145c1d219d8b06a"
+    },
+    {
+      "index": 36,
+      "originalName": "Screenshot 2026-11-04 194726.png",
+      "asset": "assets/ch12/source-36.png",
+      "bytes": 785305,
+      "sha256": "8f26b44c3d88ef08e81d380a42d2f59878a04008e36131d7dff32532273c4d25"
+    }
+  ]
+}

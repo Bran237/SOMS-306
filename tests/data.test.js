@@ -8,11 +8,11 @@ import { COURSE_CONTENT } from '../data/course.js';
 const provenance = JSON.parse(readFileSync(new URL('../data/provenance.json', import.meta.url)));
 test('the entire uploaded operations-management course is preserved', () => {
   assert.equal(createHash('sha256').update(JSON.stringify(COURSE_CONTENT)).digest('hex'), provenance.course.sha256);
-  assert.deepEqual(CONTENT.course.chapters, ['ch1', 'ch2', 'ch3', 'ch4', 'ch5', 'ch6', 'ch9', 'ch14']);
-  assert.equal(CONTENT.learningObjectives.length, 88);
-  assert.equal(CONTENT.concepts.length, 339);
-  assert.equal(CONTENT.quiz.length, 159);
-  assert.equal(CONTENT.caseStudies.length, 18);
+  assert.deepEqual(COURSE_CONTENT.course.chapters, ['ch1', 'ch2', 'ch3', 'ch4', 'ch5', 'ch6', 'ch9', 'ch14']);
+  assert.equal(COURSE_CONTENT.learningObjectives.length, 88);
+  assert.equal(COURSE_CONTENT.concepts.length, 339);
+  assert.equal(COURSE_CONTENT.quiz.length, 159);
+  assert.equal(COURSE_CONTENT.caseStudies.length, 18);
 });
 
 test('repeated source concepts have distinct runtime identities and retain chapter definitions', () => {
@@ -24,14 +24,16 @@ test('repeated source concepts have distinct runtime identities and retain chapt
   assert.ok(CONTENT.loProse['1.1'].some(block => block.html.includes('data-cid="ch1:supply-chain-management"')));
 });
 
-test('notebook covers every supplied objective without inventing homework or lecture sources', () => {
-  assert.equal(DB.notebooks.length, 88);
-  assert.equal(DB.homework.length, 0);
+test('notebook covers supplied objectives and labels textbook examples as optional practice', () => {
+  assert.equal(DB.notebooks.length, 101);
+  assert.equal(DB.homework.length, 14);
   for (const chapter of NOTEBOOK_CHAPTERS){
-    assert.equal(chapter.homework.length, 0);
+    assert.equal(chapter.homework.length, chapter.id === 'ch12' ? 14 : 0);
+    assert.ok(chapter.homework.every(problem => problem.tag === 'Optional textbook example'));
     assert.equal(chapter.homeworkConcept.length, 0);
     assert.ok(chapter.missingHw.length);
-    assert.ok(chapter.notebook.every(note => note.hw.length === 0 && note.notes.length > 0));
+    assert.ok(chapter.notebook.every(note => note.notes.length > 0));
+    if (chapter.id !== 'ch12') assert.ok(chapter.notebook.every(note => note.hw.length === 0));
     assert.ok(chapter.cards.length && chapter.quiz.length && chapter.exam.checklist.length);
     assert.equal(chapter.video, undefined);
     assert.equal(chapter.slides, undefined);

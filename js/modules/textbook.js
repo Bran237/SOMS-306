@@ -18,6 +18,11 @@ export function installTextbook(ctx) {
       const chWrap = ctx.el(`<div class="chapter-study" id="chapter-${ch.id}" data-chapter-id="${ch.id}"></div>`);
       chWrap.appendChild(ctx.el(`<p class="chapter-kicker">${los.length} learning objectives</p>`));
       chWrap.appendChild(ctx.el(`<h1 class="chapter-title">Chapter ${ch.number}: ${ch.title}</h1>`));
+      if (ch.coverageNote) chWrap.appendChild(ctx.el(`<p class="card small-muted">${ctx.escapeHTML(ch.coverageNote)}</p>`));
+      if (ch.sourcePages?.length) {
+        const gallery = ctx.el(`<details class="chapter-sources"><summary>Original textbook screenshots (${ch.sourcePages.length})</summary><p class="small-muted">Open a screenshot at full size to inspect the original text, tables, diagrams, and notation.</p><div class="source-pages">${ch.sourcePages.map((page,index) => `<figure><figcaption><a href="./${page.src}" target="_blank" rel="noopener">${ctx.escapeHTML(page.label)} · Open full size</a></figcaption><img src="./${page.src}" alt="${ctx.escapeHTML(page.label)}" width="${page.width}" height="${page.height}" loading="lazy" decoding="async"></figure>`).join('')}</div></details>`);
+        chWrap.appendChild(gallery);
+      }
       los.forEach(lo => {
         const sec = ctx.el(`<section class="lo" id="sec-${lo.id}" data-chapter-id="${chId}" data-lo-ids="${lo.id}"></section>`);
         sec.appendChild(ctx.el(`<div class="lo-banner" style="background:${ctx.loColor(lo.code)}"><span class="lo-num">${lo.code}</span><h2>${lo.text}</h2></div>`));

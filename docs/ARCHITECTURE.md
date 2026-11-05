@@ -12,7 +12,18 @@ The module hosts keep event delegation and queries local. Feature controls must 
 
 `data/course.js` preserves the complete content object extracted from the uploaded Operations Management Study Companion.html, including Chapters 1–6, 9, and 14. `data/content.js` gives repeated concept IDs distinct runtime identities without changing the source. `data/notebook-source.js` derives Notebook sections, cards, quizzes, summaries, and exam review from those operations-management readings and concepts. It carries no FIN-303 educational material. The Notebook uses objective labels and the shared registry maps those labels to canonical objectives without finance-specific numbering exceptions.
 
-Homework arrays are empty until assignments are supplied. The original FIN-303 problem, solution, calculator-step, assignment-label, and completion renderers are retained. To add homework, fill `homework` / `homeworkConcept` and link each problem from the relevant section's `hw` array. Keep original question statements, worked steps, and source labels. Slides and video renderers show absence notices until source material exists. Do not invent missing source material.
+An assigned homework list is still absent. The original FIN-303 problem, solution, calculator-step, assignment-label, and completion renderers are retained. To add homework, fill `homework` / `homeworkConcept` and link each problem from the relevant section's `hw` array. Keep original question statements, worked steps, and source labels. Slides and video renderers show absence notices until source material exists. Do not invent missing source material.
+
+Chapter 12 is a separate source module (`chapter12.js`) composed into `CONTENT` by
+`content.js`. It preserves the earlier `course.js` object unchanged. Its 13
+learning-objective labels differ from the textbook's eight supplied section
+numbers; each objective records its source section. `chapter12-examples.js`
+provides 14 optional worked textbook examples, linked from the appropriate notes.
+These are the current Homework records; an assigned exercise list is still absent.
+All 36 source PNGs are retained under `assets/ch12/`, with checksums in
+`chapter12-sources.json`. Chapter-level `sourcePages` metadata renders a collapsed,
+lazy-loaded gallery in Textbook. Coverage notices distinguish missing section
+12.9 (Operations Strategy) from the supplied objective LO12.9 about EPQ.
 
 The provenance manifest fingerprints both the uploaded HTML and the extracted course object and retains the original repository provenance. Content-preservation tests verify the full supplied object, including all readings and examples. Add future chapters to `course.chapters` and `chapters`, then supply objectives, prose, concepts, and questions. No layout rewrite is needed.
 

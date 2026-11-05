@@ -27,8 +27,8 @@ subpaths. `.nojekyll` is included.
 | Study | Guided reading and complete term review, gated flashcards, chapter quizzes, missed-answer correction, exam review and checklists, slide and video tools |
 | Practice | Flashcards, quiz, matching, crossword, active recall, concept cards, ten mini games, timed exams, weak areas, study sessions, Notebook cards and quizzes |
 
-The uploaded course content covers Chapters 1–6, 9, and 14: 88 objectives,
-339 concepts, 159 questions, 18 case studies, and all supplied readings and examples.
+The Studio covers Chapters 1–6, 9, 12, and 14: 101 objectives,
+401 concepts, 201 questions, 21 case-study readings, and the supplied readings and examples.
 Notebook outlines, summaries, cards, and review material derive from that existing
 operations-management content. No FIN-303 educational data is included.
 
@@ -40,7 +40,17 @@ chapter excerpts. Supplied textbook quotations appear in concept popups and
 flashcards. Chapter 14 omits matching, crossword, and mini-games as specified in
 the source. Its study sessions use additional quiz practice instead of games.
 
-Homework, slides, video references, and other chapters have not been supplied.
+Chapter 12, Inventory Management, is organized from 36 textbook screenshots in
+`C12.zip`. It adds all 13 supplied learning objectives, 62 concepts, 42 Studio
+practice questions, formulas, and 14 optional worked textbook examples linked
+from Notebook to Homework. The original screenshot files are retained unchanged
+and can be opened from Textbook; the gallery loads images only as needed.
+The source stops during the discussion after Example 14. Section 12.9 (Operations
+Strategy), the remainder of Table 12.3, and the later exercises/cases were not
+supplied. Example 11's printed z = 16.75 conflicts with its displayed inputs;
+the study solution documents the computed z = 6.75 and keeps the original image.
+
+An assigned homework list, slides, video references, and other chapters have not been supplied.
 Their tools are implemented, with absence notices in place of invented material.
 When those sources arrive, integrate them through the shared content registry; see
 `data/README.md`.

@@ -12,7 +12,7 @@
     "repository": "Bran237/FIN-303",
     "commit": "66fb107af1c85476f8eb803ddaad85fe83269302"
   },
-  "notebook": "Derived from original operations-management content; no homework, slides, or video sources supplied.",
+  "notebook": "Derived from supplied operations-management content. Chapter 12 includes 14 optional worked textbook examples; no assigned homework list, slides, or video sources supplied.",
   "originalCourse": {
     "repository": "Bran237/SOMS-306",
     "commit": "f6135253656d2a429693bfb79547f32f8dc1d7dd",
@@ -21,5 +21,17 @@
     "objectives": 55,
     "concepts": 155,
     "questions": 64
+  },
+  "chapter12": {
+    "source": "C12.zip",
+    "kind": "Study material organized from supplied screenshots",
+    "sourceSha256": "441cbc16d2a58f5cdf1aeba1abcdc6476217b79bfb2465d0dfde6ad932efb342",
+    "screenshots": 36,
+    "objectives": 13,
+    "concepts": 62,
+    "questions": 42,
+    "optionalTextbookExamples": 14,
+    "studyDataSha256": "0618e4508d6f326d816386608515b65ddc57474b797556e206b494add0d46763",
+    "coverage": "36 screenshots covering the chapter outline, learning objectives, sections 12.1–12.8, and Examples 1–14. Section 12.9, the rest of Table 12.3, and later exercises/cases were not supplied."
   }
 }

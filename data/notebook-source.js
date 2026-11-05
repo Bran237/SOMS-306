@@ -1,4 +1,5 @@
 import { CONTENT } from './content.js';
+import { CH12_EXAMPLES, CH12_EXAMPLE_LINKS } from './chapter12-examples.js';
 
 // Notebook material is derived only from the existing operations-management course.
 // Add supplied assignments, slides, and video references here when they arrive.
@@ -40,6 +41,7 @@ export const NOTEBOOK_CHAPTERS = CONTENT.course.chapters.map(id => {
   return {
     id,
     title: `Chapter ${chapter.number}: ${chapter.title}`,
+    coverageNote:chapter.coverageNote,
     source: 'Derived from the existing SOMS-306 learning objectives, concepts, and readings.',
     summary: `<div class="callout">Based on your existing SOMS-306 course content. Homework, slides, and video references can be added when supplied.</div>` + objectives.map(lo => `<h2>${text(lo.code)} ${text(lo.text)}</h2>` + (CONTENT.loProse[lo.code] || []).map(block => `<h3>${block.heading}</h3>${block.html}`).join('')).join(''),
     notebook: objectives.map(lo => {
@@ -52,13 +54,13 @@ export const NOTEBOOK_CHAPTERS = CONTENT.course.chapters.map(id => {
         terms:terms.map(c => [text(c.term), text(c.definition)]),
         formulas:[...new Set([...terms.filter(c => c.formula).map(c => c.formula), ...readingFormulas(blocks)])],
         explain:blocks.map(block => `<h4>${block.heading}</h4>${block.html}`).join(''),
-        hw:[],
+        hw:(id === 'ch12' ? CH12_EXAMPLE_LINKS[lo.code] || [] : []).map(n => `ch12-example-${String(n).padStart(2,'0')}`),
       };
     }),
-    homework:[],
+    homework:id === 'ch12' ? CH12_EXAMPLES : [],
     homeworkConcept:[],
-    missingHw:['Homework problems and worked solutions have not been uploaded yet. They will appear here and beside their related notebook sections once supplied.'],
-    calcNote:'Calculator instructions will be included with your homework when the original problems are supplied.',
+    missingHw:[id === 'ch12' ? 'An assigned exercise list and end-of-chapter problems were not supplied. The worked textbook Examples 1–14 below are optional practice.' : 'Homework problems and worked solutions have not been uploaded yet. They will appear here and beside their related notebook sections once supplied.'],
+    calcNote:id === 'ch12' ? 'Optional worked textbook examples from your screenshots. Keep demand and holding costs in the same time period, check units, and distinguish cycle service level from fill rate. Source Example 11 contains a printed arithmetic discrepancy, noted with its solution.' : 'Calculator instructions will be included with your homework when the original problems are supplied.',
     // Append reading formulas after existing cards to preserve saved card indexes.
     cards:concepts.map(c => ({f:text(c.term), b:text(c.definition), k:'term'})).concat([...conceptFormulas, ...proseFormulas].map(item => ({f:item.label, b:item.formula, k:'formula'}))),
     quiz,

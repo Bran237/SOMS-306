@@ -11,7 +11,7 @@ const require = createRequire(import.meta.url);
 const { chromium } = require('playwright');
 const repository = resolve(fileURLToPath(new URL('../', import.meta.url)));
 const prefix = '/SOMS-306/';
-const mime = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.mjs': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.json': 'application/json; charset=utf-8', '.svg': 'image/svg+xml' };
+const mime = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.mjs': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.json': 'application/json; charset=utf-8', '.svg': 'image/svg+xml', '.png':'image/png' };
 
 // A real project Pages prefix catches absolute asset paths and accidental HTML
 // fallbacks. This runner starts and stops its own server and disposable browser.
@@ -329,6 +329,47 @@ try {
     for (const id of learned) assert.equal(progress.companion.flashcardStatus[id], 'know');
     assert.equal(progress.companion.quizAttempts.length, 19);
     await added.close();
+  });
+
+  await step('Chapter 12 source images, worked examples, quizzes, and saved completion work together', async () => {
+    const chapter = await browser.newPage({viewport:{width:1440,height:1000}});
+    chapter.setDefaultTimeout(12000);
+    chapter.on('pageerror', error => errors.push(error.message));
+    await chapter.goto(`${base}#/textbook/ch12`);
+    const sources = chapter.locator('#chapter-ch12 .chapter-sources');
+    await sources.waitFor();
+    assert.equal(await sources.locator('img').count(),36);
+    await sources.locator('summary').click();
+    await chapter.waitForFunction(() => document.querySelector('#chapter-ch12 .source-pages img')?.naturalWidth === 2880);
+    assert.equal((await chapter.request.get(`${base}assets/ch12/source-36.png`)).status(),200);
+    await sources.locator('summary').click();
+    await chapter.locator('#main-navigation [data-section="notebook"]').click();
+    assert.equal(await chapter.locator('#p-notebook [data-note-id]').count(),13);
+    await chapter.locator('#p-notebook [data-nbdone="ch12:12.8"]').check();
+    const key = 'ch12:ch12-example-02';
+    const problem = chapter.locator('#p-notebook [data-homework-id="homework:ch12:ch12-example-02"]');
+    await problem.locator('[data-hwdone]').check();
+    await problem.locator('details.sol summary').first().click();
+    assert.match(await problem.locator('.finalans').first().textContent(), /300 tires/);
+    await chapter.locator('#main-navigation [data-section="homework"]').click();
+    assert.equal(await chapter.locator('#p-homework .prob2').count(),14);
+    assert.equal(await chapter.locator(`#p-homework [data-hwdone="${key}"]`).isChecked(),true);
+    assert.match(await chapter.locator('#p-homework').innerText(), /Optional textbook example/);
+    assert.match(await chapter.locator('#p-homework').innerText(), /screenshot prints z = 16.75/);
+    await chapter.reload();
+    await chapter.locator(`#p-homework [data-hwdone="${key}"]`).waitFor();
+    assert.equal(await chapter.locator(`#p-homework [data-hwdone="${key}"]`).isChecked(),true);
+    assert.equal((await state(chapter)).notebook.done['ch12:12.8'],true);
+    await chapter.locator('#main-navigation [data-section="practice"]').click();
+    await chapter.locator('#practiceToggle [data-tab="quiz"]').click();
+    assert.equal(await chapter.locator('#qs-scope').inputValue(),'chapter:ch12');
+    await chapter.locator('#qs-count').selectOption('5');
+    await chapter.locator('[data-action="quizBegin"]').click();
+    for (let n=0;n<5;n++) await answerCompanion(chapter);
+    assert.equal(await chapter.locator('#practiceContent .stat-value').innerText(),'5/5');
+    const backup=JSON.parse(await chapter.evaluate(async()=> (await import('./js/core/store.js')).store.exportBackup()));
+    assert.equal(backup.state.notebook.homeworkDone[key],true);
+    await chapter.close();
   });
 
   assert.deepEqual(errors, [], 'Unexpected JavaScript page errors');

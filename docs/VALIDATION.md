@@ -36,3 +36,11 @@ game.
 Notification permission and actual delivery remain browser-dependent. Video
 playback requires supplied video references and network access. Those cannot be
 validated as real course content before the material is uploaded.
+
+Chapter 12 checks verify all 36 source image fingerprints, all 13 objectives,
+the concept/question registry, and all 14 Notebook-to-Homework links. Independent
+arithmetic checks cover EOQ, EPQ, quantity discounts, reorder points, FOI,
+single-period stocking, and the noted source error in Example 11. Browser checks
+open original images under the GitHub Pages subpath, solve a chapter quiz, and
+verify that written/solved state survives reload and backup export. Mobile checks
+include Chapter 12 Textbook, Notebook, and Homework.

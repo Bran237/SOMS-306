@@ -312,8 +312,8 @@ try {
 
   await step('Added chapter readings and notebooks fit a mobile viewport', async () => {
     await page.setViewportSize({width:390,height:844});
-    for (const chapter of ['ch6','ch9','ch14']) {
-      for (const section of ['textbook','notebook']) {
+    for (const chapter of ['ch6','ch9','ch12','ch14']) {
+      for (const section of chapter === 'ch12' ? ['textbook','notebook','homework'] : ['textbook','notebook']) {
         await go(section, chapter);
         assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), `${section} ${chapter} overflows the viewport`);
       }
